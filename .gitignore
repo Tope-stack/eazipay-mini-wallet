@@ -126,7 +126,7 @@ dist
 .vscode-test
 
 # node modules
-node_modules
+node_modules/
 
 # yarn v3
 .pnp.*
