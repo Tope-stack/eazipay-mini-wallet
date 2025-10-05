@@ -371,6 +371,10 @@ src/
 │   ├── authService.js   # Authentication logic
 │   ├── walletService.js # Wallet operations
 │   └── blockchainService.js # Blockchain interactions
+├── tests/
+|   ├── models   # Models test folder
+│   ├── services # Services test folder
+│   └── util # Utils test folder
 ├── util/
 │   ├── auth.js          # JWT utilities
 │   └── encryption.js    # Private key encryption
