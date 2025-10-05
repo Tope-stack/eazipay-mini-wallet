@@ -1,15 +1,28 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-function authenticationJWT(req, res, next) {
-    const token = req.header('Authorization')?.split(' ')[1];
-    if (!token) return res.status(401).send('Access Denied');
-
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-        if (err) return res.status(403).send('Invalid Token');
-        req.user = user;
-        next();
-    });
+/**
+ * Verify JWT token
+ */
+function authenticateToken(token) {
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return decoded;
+  } catch (error) {
+    throw new Error('Invalid or expired token');
+  }
 }
 
-module.exports = authenticateJWT;
+/**
+ * Generate JWT token
+ */
+function generateToken(payload) {
+  return jwt.sign(payload, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_EXPIRES_IN || '24h'
+  });
+}
+
+module.exports = {
+  authenticateToken,
+  generateToken
+};

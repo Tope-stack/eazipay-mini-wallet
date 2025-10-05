@@ -81,7 +81,7 @@ async function getTransactionHistoryFromBlockchain(address, limit = 10) {
  * Send funds to another address
  * @param {string} privateKey - Sender's private key
  * @param {string} toAddress - Recipient address
- * @param {float} amount - Amount in ETH
+ * @param {string} amount - Amount in ETH
  * @returns {Promise<Object>} transaction result
  */
 async function sendFundsOnBlockchain(privateKey, toAddress, amount) {

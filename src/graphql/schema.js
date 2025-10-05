@@ -1,52 +1,67 @@
-const { gql } = require('apollo-server-express');
-const { createWalletController, getBalanceController, getTransactionHistoryController } = require('/controllers/walletController');
+const gql = require('graphql-tag');
 
 const typeDefs = gql`
-    type Wallet {
-    address: String!
-    privateKey: String!
-    }
+  type User {
+    id: ID!
+    email: String!
+    createdAt: String!
+  }
 
-    type Transaction {
+  type AuthPayload {
+    token: String!
+    user: User!
+  }
+
+  type Wallet {
+    id: ID!
+    address: String!
+    balance: String
+    userId: ID!
+    createdAt: String!
+  }
+
+  type Transaction {
+    id: ID!
     hash: String!
     from: String!
     to: String!
-    amount: Float!
+    amount: String!
     status: String!
-    }
+    timestamp: String
+    blockNumber: String
+  }
 
-    type Query {
-    getBalance(address: String!): Float!
-    getTransactionHistory(address: String!): [Transaction!]!
-    }
+  type TransactionHistory {
+    transactions: [Transaction!]!
+    total: Int!
+  }
 
-    type Mutation {
+  type SendFundsResult {
+    success: Boolean!
+    transactionHash: String
+    message: String!
+  }
+
+  type Query {
+    # Auth
+    me: User
+
+    # Wallet operations
+    getWallet(id: ID!): Wallet
+    getMyWallets: [Wallet!]!
+    getBalance(walletId: ID!): String!
+    getTransactionHistory(walletId: ID!, limit: Int): TransactionHistory!
+  }
+
+  type Mutation {
+    # Authentication
+    register(email: String!, password: String!): AuthPayload!
+    login(email: String!, password: String!): AuthPayload!
+
+    # Wallet operations
     createWallet: Wallet!
-    sendFunds(from: String!, to: String!, amount: Float!, privateKey: String!): String!
-    }
+    sendFunds(fromWalletId: ID!, toAddress: String!, amount: String!): SendFundsResult!
+  }
 `;
 
-const resolvers = {
-    Query: {
-        getBalance: async(_, { address }) => {
-            //const balance = await getBalanceFromBlockChain(address);
-            return await getBalanceController({ params: { address } }, { json: (data) => data });
-        },
-        getTransactionHistory: async (_, { address }) => {
-            //const transactions = await getTransactionHistoryFromBlockchain(address);
-            return await getTransactionHistoryController({ params: { address } }, { json: (data) => data });
-        }
-    },
-    Mutation: {
-        createWallet: async () => {
-            const walletData = await createWalletController({}, { json: (data) => data });
-            return walletData;
-        },
-        sendFunds: async (_, { from, to, amount, privateKey }) => {
-            const transactionHash = await sendFundsOnBlockChain(from, to, amount, privateKey);
-            return transactionHash;
-        }
-    }
-};
-
-module.exports = { typeDefs, resolvers };
+module.exports = typeDefs;
