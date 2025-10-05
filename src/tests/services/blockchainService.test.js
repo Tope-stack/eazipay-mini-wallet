@@ -1,4 +1,4 @@
-const blockchainService = require('../../services/blockchainservice');
+const blockchainService = require('../../services/blockchainSsservice');
 
 describe('BlockchainService', () => {
   describe('createWallet', () => {

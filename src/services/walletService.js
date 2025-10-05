@@ -1,6 +1,6 @@
 const Wallet = require('../models/walletModel');
 const Transaction = require('../models/transactionModel');
-const blockchainService = require('./blockchainService');
+const blockchainService = require('./blockchainSsservice');
 const { encryptPrivateKey, decryptPrivateKey } = require('../util/encryption');
 
 /**

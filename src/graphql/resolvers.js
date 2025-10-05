@@ -1,6 +1,6 @@
 const walletService = require('../services/walletService');
 const authService = require('../services/authService');
-const blockchainService = require('../services/blockchainService');
+const blockchainService = require('../services/blockchainSsservice');
 
 const resolvers = {
   Query: {
