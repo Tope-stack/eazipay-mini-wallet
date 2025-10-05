@@ -1,4 +1,4 @@
-# 🌐 Mini Wallet Application (MongoDB)
+# 🌐 Eazipay Mini Wallet Application
 
 A simple blockchain mini wallet service with GraphQL API, JWT authentication, and MongoDB.
 
