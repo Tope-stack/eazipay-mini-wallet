@@ -4,6 +4,7 @@ const { expressMiddleware } = require('@apollo/server/express4');
 const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
+const { ApolloServerPluginLandingPageLocalDefault } = require('@apollo/server/plugin/landingPage/default');
 require('dotenv').config();
 
 const typeDefs = require('./graphql/schema');
@@ -18,6 +19,9 @@ const PORT = process.env.PORT || 4000;
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors());
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
 
 // Rate limiting
 const limiter = rateLimit({
@@ -31,6 +35,24 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Test UI route
+app.get('/test', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'graphql-test.html'));
+});
+
+// Root route
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Mini Wallet API',
+    version: '1.0.0',
+    endpoints: {
+      graphql: '/graphql',
+      test: '/test',
+      health: '/health'
+    }
+  });
+});
+
 // Apollo Server setup
 async function startServer() {
   try {
@@ -40,6 +62,12 @@ async function startServer() {
     const server = new ApolloServer({
       typeDefs,
       resolvers,
+      introspection: true, // Enable introspection
+      plugins: [
+        ApolloServerPluginLandingPageLocalDefault({ 
+          includeCookies: true 
+        })
+      ],
       formatError: (error) => {
         console.error('GraphQL Error:', error);
         return {

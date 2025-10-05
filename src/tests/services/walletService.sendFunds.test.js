@@ -7,7 +7,7 @@ const Wallet = require('../../models/walletModel');
 const Transaction = require('../../models/transactionModel');
 
 // Mock blockchain service
-jest.mock('../../services/blockchainService');
+jest.mock('../../services/blockchainSsservice');
 
 let mongoServer;
 let testUserId;
