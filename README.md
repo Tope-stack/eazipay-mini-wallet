@@ -257,19 +257,91 @@ npm run test:watch
 
 # Run tests with coverage
 npm test -- --coverage
-```
 
-### Test Coverage
-- **Lines**: 85%
-- **Functions**: 82%
-- **Branches**: 78%
-- **Statements**: 85%
+# Run with verbose output
+npm test -- --verbose
+```
 
 ### Testing Features
 - Unit tests for all services
 - Integration tests with MongoDB Memory Server
 - Blockchain service tests
 - Authentication and encryption tests
+
+## 🧪 Test Coverage Report
+
+### Overall Coverage Summary
+
+| Metric | Coverage | Target | Status |
+|--------|----------|--------|--------|
+| **Statements** | 77.14% | 60% | ✅ PASSED |
+| **Branches** | 60.60% | 50% | ✅ PASSED |
+| **Functions** | 77.27% | 60% | ✅ PASSED |
+| **Lines** | 77.53% | 60% | ✅ PASSED |
+
+### Test Results
+
+- **Test Suites**: 7 passed, 7 total
+- **Tests**: 51 passed, 2 skipped, 53 total
+- **Duration**: ~12 seconds
+
+### Detailed Coverage Breakdown
+
+#### Models (94.44% coverage)
+| File | Statements | Branches | Functions | Lines |
+|------|------------|----------|-----------|-------|
+| transactionModel.js | 100% | 100% | 100% | 100% |
+| userModel.js | 100% | 100% | 100% | 100% |
+| walletModel.js | 80% | 100% | 50% | 80% |
+
+#### Services (67.70% coverage)
+| File | Statements | Branches | Functions | Lines | Notes |
+|------|------------|----------|-----------|-------|-------|
+| authService.js | 100% | 100% | 100% | 100% | Full coverage |
+| walletService.js | 93.1% | 100% | 100% | 92.85% | Excellent coverage |
+| blockchainService.js | 19.44% | 0% | 20% | 20% | Network-dependent tests skipped |
+
+#### Utilities (100% coverage)
+| File | Statements | Branches | Functions | Lines |
+|------|------------|----------|-----------|-------|
+| auth.js | 100% | 50% | 100% | 100% |
+| encryption.js | 100% | 50% | 100% | 100% |
+
+### What's Tested
+
+✅ **User Authentication**
+- User registration with validation
+- Login with credential verification
+- Password hashing
+- JWT token generation and verification
+- Token expiration handling
+
+✅ **Wallet Management**
+- Wallet creation with unique addresses
+- Private key encryption/decryption
+- Wallet retrieval and access control
+- Multi-wallet support per user
+
+✅ **Fund Transfers**
+- Successful fund transfers
+- Transaction recording in database
+- Error handling for failed transactions
+- Wallet access validation
+
+✅ **Security**
+- Password encryption with bcrypt
+- Private key encryption with AES-256
+- JWT authentication
+- Input validation
+- Access control enforcement
+
+✅ **Data Models**
+- Schema validation
+- Unique constraints
+- Email format validation
+- Required field enforcement
+
+
 
 ## 🔒 Security Features
 
@@ -349,95 +421,6 @@ src/
 }
 ```
 **Indexes**: `walletId`, `hash`
-
-
-## 🧪 Test Coverage Report
-
-### Overall Coverage Summary
-
-| Metric | Coverage | Target | Status |
-|--------|----------|--------|--------|
-| **Statements** | 77.14% | 60% | ✅ PASSED |
-| **Branches** | 60.60% | 50% | ✅ PASSED |
-| **Functions** | 77.27% | 60% | ✅ PASSED |
-| **Lines** | 77.53% | 60% | ✅ PASSED |
-
-### Test Results
-
-- **Test Suites**: 7 passed, 7 total
-- **Tests**: 51 passed, 2 skipped, 53 total
-- **Duration**: ~12 seconds
-
-### Detailed Coverage Breakdown
-
-#### Models (94.44% coverage)
-| File | Statements | Branches | Functions | Lines |
-|------|------------|----------|-----------|-------|
-| transactionModel.js | 100% | 100% | 100% | 100% |
-| userModel.js | 100% | 100% | 100% | 100% |
-| walletModel.js | 80% | 100% | 50% | 80% |
-
-#### Services (67.70% coverage)
-| File | Statements | Branches | Functions | Lines | Notes |
-|------|------------|----------|-----------|-------|-------|
-| authService.js | 100% | 100% | 100% | 100% | Full coverage |
-| walletService.js | 93.1% | 100% | 100% | 92.85% | Excellent coverage |
-| blockchainService.js | 19.44% | 0% | 20% | 20% | Network-dependent tests skipped |
-
-#### Utilities (100% coverage)
-| File | Statements | Branches | Functions | Lines |
-|------|------------|----------|-----------|-------|
-| auth.js | 100% | 50% | 100% | 100% |
-| encryption.js | 100% | 50% | 100% | 100% |
-
-### What's Tested
-
-✅ **User Authentication**
-- User registration with validation
-- Login with credential verification
-- Password hashing
-- JWT token generation and verification
-- Token expiration handling
-
-✅ **Wallet Management**
-- Wallet creation with unique addresses
-- Private key encryption/decryption
-- Wallet retrieval and access control
-- Multi-wallet support per user
-
-✅ **Fund Transfers**
-- Successful fund transfers
-- Transaction recording in database
-- Error handling for failed transactions
-- Wallet access validation
-
-✅ **Security**
-- Password encryption with bcrypt
-- Private key encryption with AES-256
-- JWT authentication
-- Input validation
-- Access control enforcement
-
-✅ **Data Models**
-- Schema validation
-- Unique constraints
-- Email format validation
-- Required field enforcement
-
-### Running Tests
-```bash
-# Run all tests
-npm test
-
-# Run tests in watch mode
-npm run test:watch
-
-# Run specific test file
-npm test authService.test.js
-
-# Run with verbose output
-npm test -- --verbose
-
 
 ## 🌍 Deployment
 
