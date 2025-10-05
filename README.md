@@ -367,6 +367,8 @@ src/
 │   ├── userModel.js     # User Mongoose schema
 │   ├── walletModel.js   # Wallet Mongoose schema
 │   └── transactionModel.js # Transaction Mongoose schema
+├── public/
+│   └── graphql-test.html      # Test UI
 ├── services/
 │   ├── authService.js   # Authentication logic
 │   ├── walletService.js # Wallet operations
@@ -778,4 +780,7 @@ Run: `node test-connection.js`
 6. **Test GraphQL**: Open http://localhost:4000/graphql
 7. **Deploy**: Follow deployment instructions
 8. **Get testnet ETH**: Use [Sepolia faucet](https://sepoliafaucet.com/)
+
+
+**Visit Test UI Page**: [Eazipay Mini Wallet Test UI](https://eazipay-mini-wallet.onrender.com/test)
 
