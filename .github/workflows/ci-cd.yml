@@ -104,4 +104,4 @@ jobs:
       if: success()
       run: |
         echo "✅ Deployment to Render initiated successfully"
-        echo "🚀 Your app will be live at: https://eazipay-mini-wallet.onrender.com"
+        echo "🚀 Visit: https://eazipay-mini-wallet.onrender.com/test"
