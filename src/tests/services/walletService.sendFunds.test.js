@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const walletService = require('../../services/walletService');
-const blockchainService = require('../../services/blockchainservice');
+const blockchainService = require('../../services/blockchainSsservice');
 const User = require('../../models/userModel');
 const Wallet = require('../../models/walletModel');
 const Transaction = require('../../models/transactionModel');

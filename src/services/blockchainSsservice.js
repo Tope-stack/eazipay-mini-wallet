@@ -1,7 +1,7 @@
 const { ethers } = require('ethers');
 require('dotenv').config();
 
-// Connect to Ethereum testnet (Sepolia via Alchemy)
+// Connect to Ethereum testnet 
 const provider = new ethers.JsonRpcProvider(process.env.RPC_URL);
 
 /**
