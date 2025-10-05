@@ -8,26 +8,14 @@ const { encryptPrivateKey, decryptPrivateKey } = require('../util/encryption');
  */
 async function createWallet(userId) {
     try {
-      console.log('Creating wallet for user:', userId);
-      
-      // Step 1: Create wallet on blockchain
-      console.log('Step 1: Calling blockchainService.createWallet()');
       const { address, privateKey } = blockchainService.createWallet();
-      console.log('Wallet created:', address);
-      
-      // Step 2: Encrypt private key
-      console.log('Step 2: Encrypting private key');
       const encryptedPrivateKey = encryptPrivateKey(privateKey);
-      console.log('Private key encrypted');
   
-      // Step 3: Save to database
-      console.log('Step 3: Saving to database');
       const wallet = await Wallet.create({
         address,
         encryptedPrivateKey,
         userId
       });
-      console.log('Wallet saved to database:', wallet._id);
   
       return {
         id: wallet._id.toString(),
@@ -36,10 +24,7 @@ async function createWallet(userId) {
         createdAt: wallet.createdAt.toISOString()
       };
     } catch (error) {
-      console.error('=== ERROR CREATING WALLET ===');
-      console.error('Error message:', error.message);
-      console.error('Error stack:', error.stack);
-      console.error('=============================');
+      console.error('Error creating wallet:', error);
       throw new Error(`Failed to create wallet: ${error.message}`);
     }
   }
