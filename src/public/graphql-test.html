@@ -1,91 +1,217 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Eazipay Wallet API</title>
+    <title>Eazipay Mini Wallet API Test</title>
     <style>
-        body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
-        textarea { width: 100%; height: 150px; margin: 10px 0; }
-        button { padding: 10px 20px; background: #0070f3; color: white; border: none; cursor: pointer; }
-        .response { background: #f5f5f5; padding: 15px; margin: 10px 0; border-radius: 5px; }
-        input { width: 100%; padding: 8px; margin: 5px 0; }
+        body { 
+            font-family: Arial, sans-serif; 
+            max-width: 900px; 
+            margin: 50px auto; 
+            padding: 20px; 
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #0070f3; }
+        h3 { color: #333; margin-top: 25px; border-bottom: 2px solid #0070f3; padding-bottom: 5px; }
+        input, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            margin: 5px 0; 
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button { 
+            padding: 12px 24px; 
+            background: #0070f3; 
+            color: white; 
+            border: none; 
+            cursor: pointer; 
+            border-radius: 5px;
+            font-size: 14px;
+            margin: 5px 5px 5px 0;
+        }
+        button:hover { background: #0051cc; }
+        .response { 
+            background: #f8f8f8; 
+            padding: 15px; 
+            margin: 10px 0; 
+            border-radius: 5px; 
+            border-left: 4px solid #0070f3;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .success { border-left-color: #00b300; }
+        .error { border-left-color: #ff0000; }
+        .section { margin: 20px 0; padding: 15px; background: #f9f9f9; border-radius: 5px; }
     </style>
 </head>
 <body>
-    <h1>Mini Wallet API Tester</h1>
-    
-    <h3>1. Register User</h3>
-    <input type="email" id="registerEmail" placeholder="Email">
-    <input type="password" id="registerPassword" placeholder="Password">
-    <button onclick="register()">Register</button>
-    
-    <h3>2. Login</h3>
-    <input type="email" id="loginEmail" placeholder="Email">
-    <input type="password" id="loginPassword" placeholder="Password">
-    <button onclick="login()">Login</button>
-    
-    <h3>Auth Token</h3>
-    <input type="text" id="authToken" placeholder="Token will appear here after login">
-    
-    <h3>3. Create Wallet</h3>
-    <button onclick="createWallet()">Create Wallet</button>
-    
-    <h3>4. Get My Wallets</h3>
-    <button onclick="getWallets()">Get My Wallets</button>
-    
-    <h3>Response</h3>
-    <div class="response" id="response">Response will appear here...</div>
+    <div class="container">
+        <h1>Mini Wallet API Tester</h1>
+        
+        <div class="section">
+            <h3>1. Register User</h3>
+            <input type="email" id="registerEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="registerPassword" placeholder="Password (min 6 chars)" value="password123">
+            <button onclick="register()">Register</button>
+        </div>
+        
+        <div class="section">
+            <h3>2. Login</h3>
+            <input type="email" id="loginEmail" placeholder="Email" value="test@example.com">
+            <input type="password" id="loginPassword" placeholder="Password" value="password123">
+            <button onclick="login()">Login</button>
+        </div>
+        
+        <div class="section">
+            <h3>Auth Token</h3>
+            <input type="text" id="authToken" placeholder="Token will appear here after login" readonly>
+        </div>
+        
+        <div class="section">
+            <h3>3. Get My Info</h3>
+            <button onclick="getMe()">Get My Info</button>
+        </div>
+        
+        <div class="section">
+            <h3>4. Create Wallet</h3>
+            <button onclick="createWallet()">Create Wallet</button>
+        </div>
+        
+        <div class="section">
+            <h3>5. Get My Wallets</h3>
+            <button onclick="getWallets()">Get My Wallets</button>
+        </div>
+        
+        <div class="section">
+            <h3>6. Check Balance</h3>
+            <input type="text" id="balanceWalletId" placeholder="Wallet ID">
+            <button onclick="getBalance()">Check Balance</button>
+        </div>
+        
+        <div class="section">
+            <h3>7. Get Transaction History</h3>
+            <input type="text" id="historyWalletId" placeholder="Wallet ID">
+            <input type="number" id="historyLimit" placeholder="Limit (default 10)" value="10">
+            <button onclick="getTransactionHistory()">Get History</button>
+        </div>
+        
+        <div class="section">
+            <h3>8. Send Funds</h3>
+            <input type="text" id="sendFromWalletId" placeholder="From Wallet ID">
+            <input type="text" id="sendToAddress" placeholder="To Address (0x...)">
+            <input type="text" id="sendAmount" placeholder="Amount in ETH (e.g., 0.001)">
+            <button onclick="sendFunds()">Send Funds</button>
+            <p style="font-size: 12px; color: #666;">
+                Note: Your wallet must have test ETH. Get some from 
+                <a href="https://sepoliafaucet.com/" target="_blank">Sepolia Faucet</a>
+            </p>
+        </div>
+        
+        <h3>Response</h3>
+        <div class="response" id="response">Response will appear here...</div>
+    </div>
 
     <script>
         const API_URL = window.location.origin + '/graphql';
 
+        function displayResponse(result) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerText = JSON.stringify(result, null, 2);
+            
+            if (result.errors) {
+                responseDiv.className = 'response error';
+            } else {
+                responseDiv.className = 'response success';
+            }
+        }
+
         async function graphqlRequest(query, variables = {}) {
-            const token = document.getElementById('authToken').value;
-            const headers = { 'Content-Type': 'application/json' };
-            if (token) headers['Authorization'] = `Bearer ${token}`;
+            try {
+                const token = document.getElementById('authToken').value;
+                const headers = { 'Content-Type': 'application/json' };
+                if (token) headers['Authorization'] = `Bearer ${token}`;
 
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers,
-                body: JSON.stringify({ query, variables })
-            });
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ query, variables })
+                });
 
-            const result = await response.json();
-            document.getElementById('response').innerText = JSON.stringify(result, null, 2);
-            return result;
+                const result = await response.json();
+                displayResponse(result);
+                return result;
+            } catch (error) {
+                displayResponse({ errors: [{ message: error.message }] });
+            }
         }
 
         async function register() {
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
+            
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+            
             const query = `
                 mutation {
                     register(email: "${email}", password: "${password}") {
                         token
-                        user { id email }
+                        user { id email createdAt }
                     }
                 }
             `;
             const result = await graphqlRequest(query);
             if (result.data?.register?.token) {
                 document.getElementById('authToken').value = result.data.register.token;
+                alert('Registration successful! Token saved.');
             }
         }
 
         async function login() {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
+            
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+            
             const query = `
                 mutation {
                     login(email: "${email}", password: "${password}") {
                         token
-                        user { id email }
+                        user { id email createdAt }
                     }
                 }
             `;
             const result = await graphqlRequest(query);
             if (result.data?.login?.token) {
                 document.getElementById('authToken').value = result.data.login.token;
+                alert('Login successful! Token saved.');
             }
+        }
+
+        async function getMe() {
+            const query = `
+                query {
+                    me {
+                        id
+                        email
+                        createdAt
+                    }
+                }
+            `;
+            await graphqlRequest(query);
         }
 
         async function createWallet() {
@@ -94,11 +220,15 @@
                     createWallet {
                         id
                         address
+                        userId
                         createdAt
                     }
                 }
             `;
-            await graphqlRequest(query);
+            const result = await graphqlRequest(query);
+            if (result.data?.createWallet?.id) {
+                alert('Wallet created! Copy the wallet ID for other operations.');
+            }
         }
 
         async function getWallets() {
@@ -112,6 +242,84 @@
                 }
             `;
             await graphqlRequest(query);
+        }
+
+        async function getBalance() {
+            const walletId = document.getElementById('balanceWalletId').value;
+            
+            if (!walletId) {
+                alert('Please enter a wallet ID');
+                return;
+            }
+            
+            const query = `
+                query {
+                    getBalance(walletId: "${walletId}")
+                }
+            `;
+            await graphqlRequest(query);
+        }
+
+        async function getTransactionHistory() {
+            const walletId = document.getElementById('historyWalletId').value;
+            const limit = document.getElementById('historyLimit').value || 10;
+            
+            if (!walletId) {
+                alert('Please enter a wallet ID');
+                return;
+            }
+            
+            const query = `
+                query {
+                    getTransactionHistory(walletId: "${walletId}", limit: ${limit}) {
+                        transactions {
+                            id
+                            hash
+                            from
+                            to
+                            amount
+                            status
+                            timestamp
+                            blockNumber
+                        }
+                        total
+                    }
+                }
+            `;
+            await graphqlRequest(query);
+        }
+
+        async function sendFunds() {
+            const fromWalletId = document.getElementById('sendFromWalletId').value;
+            const toAddress = document.getElementById('sendToAddress').value;
+            const amount = document.getElementById('sendAmount').value;
+            
+            if (!fromWalletId || !toAddress || !amount) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (!toAddress.startsWith('0x') || toAddress.length !== 42) {
+                alert('Invalid Ethereum address format');
+                return;
+            }
+            
+            if (confirm(`Send ${amount} ETH to ${toAddress}?`)) {
+                const query = `
+                    mutation {
+                        sendFunds(
+                            fromWalletId: "${fromWalletId}"
+                            toAddress: "${toAddress}"
+                            amount: "${amount}"
+                        ) {
+                            success
+                            transactionHash
+                            message
+                        }
+                    }
+                `;
+                await graphqlRequest(query);
+            }
         }
     </script>
 </body>

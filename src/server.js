@@ -44,7 +44,7 @@ app.get('/test', (req, res) => {
 // Root route
 app.get('/', (req, res) => {
   res.json({
-    message: 'Mini Wallet API',
+    message: 'Eazipay Mini Wallet API',
     version: '1.0.0',
     endpoints: {
       graphql: '/graphql',
