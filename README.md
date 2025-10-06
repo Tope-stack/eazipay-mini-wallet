@@ -34,7 +34,7 @@ A simple blockchain mini wallet service with GraphQL API, JWT authentication, an
 - Alchemy API key ([Get free key](https://www.alchemy.com/))
 - Etherscan API key ([Get free key](https://etherscan.io/apis))
 
-## 🚀 Quick Start
+## 🚀 Quick Start (Local setup)
 
 ### 1. Clone and Install
 
@@ -92,6 +92,19 @@ npm test
 
 Server runs at: `http://localhost:4000`  
 GraphQL Playground: `http://localhost:4000/graphql`
+
+## 🚀 Quick Start (Deployment setup)
+
+**Deploy to Render**
+   - Push code to GitHub
+   - Go to [Render Dashboard](https://dashboard.render.com/)
+   - Click "New +" → "Web Service"
+   - Connect your GitHub repository
+   - Configure:
+     - **Name**: eazipay-mini-wallet
+     - **Environment**: Node
+     - **Build Command**: `npm install`
+     - **Start Command**: `npm start`
 
 ## 🐳 Docker Setup
 
@@ -400,10 +413,6 @@ src/
 }
 ```
 **Indexes**: `walletId`, `hash`
-
-## 🌍 Deployment
-
-### Deployed to Render
 
 ## 🎨 Design Decisions
 
