@@ -126,7 +126,7 @@ docker-compose logs -f app
 #### Register User
 ```graphql
 mutation {
-  register(email: "user@example.com", password: "secure123") {
+  register(email: "user@example.com", password: "password123") {
     token
     user {
       id
@@ -140,7 +140,7 @@ mutation {
 #### Login
 ```graphql
 mutation {
-  login(email: "user@example.com", password: "secure123") {
+  login(email: "test@example.com", password: "password123") {
     token
     user {
       id
@@ -213,7 +213,7 @@ query {
 #### Get Transaction History
 ```graphql
 query {
-  getTransactionHistory(walletId: "65abc123def456789", limit: 10) {
+  getTransactionHistory(walletId: "68e2309debfcfa2722dde4a4", limit: 10) {
     transactions {
       hash
       from
@@ -232,7 +232,7 @@ query {
 ```graphql
 mutation {
   sendFunds(
-    fromWalletId: "65abc123def456789"
+    fromWalletId: "68e2309debfcfa2722dde4a4"
     toAddress: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
     amount: "0.001"
   ) {
@@ -550,3 +550,10 @@ MIT License - see [LICENSE](LICENSE) file
 
 **Visit GraphQL playground**: [Eazipay Mini Wallet GraphQL Playground](https://eazipay-mini-wallet.onrender.com/graphql)
 
+
+**Test User Details**: 
+   - Email:test@example.com
+   - Password: password123
+   - walletdId: 68e2309debfcfa2722dde4a4
+   - walletaddress: 0x40Ef24dA8eC57223ba7261F60d58c834949A98Ae
+   - userId: 68e22b5e176a466f0fb18178
