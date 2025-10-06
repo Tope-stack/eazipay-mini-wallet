@@ -482,34 +482,6 @@ db.transactions.createIndex({ walletId: 1 })
 db.stats()
 ```
 
-## 🚨 Common Issues & Solutions
-
-### Issue: MongoDB Connection Failed
-```bash
-# Solution 1: Check if MongoDB is running
-brew services list | grep mongodb
-
-# Solution 2: Restart MongoDB
-brew services restart mongodb-community@7
-
-# Solution 3: Check connection string
-echo $MONGODB_URI
-```
-
-### Issue: Module Not Found
-```bash
-# Clear cache and reinstall
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### Issue: Test Failures
-```bash
-# Ensure no other MongoDB instance is running on test port
-# Run tests with proper environment
-JWT_SECRET=test npm test
-```
-
 ## 🤝 Contributing
 
 1. Fork the repository
@@ -533,55 +505,7 @@ MIT License - see [LICENSE](LICENSE) file
 
 ---
 
-**⚠️ Disclaimer**: This is a testnet application for demonstration purposes.
-
-## 🎯 MongoDB-Specific Setup Guide
-
-### Local Development with MongoDB
-
-```bash
-# Install MongoDB (macOS)
-brew tap mongodb/brew
-brew install mongodb-community@7
-brew services start mongodb-community@7
-
-# Install MongoDB (Ubuntu/Debian)
-sudo apt-get install mongodb
-
-# Install MongoDB (Windows)
-# Download from: https://www.mongodb.com/try/download/community
-```
-
-### MongoDB Atlas (Cloud) Setup
-
-1. **Create Account**: Go to [MongoDB Atlas](https://www.mongodb.com/atlas)
-2. **Create Free Cluster**:
-   - Select "Shared" (free tier)
-   - Choose region closest to you
-   - Create cluster (takes 3-5 minutes)
-
-3. **Configure Access**:
-   - Click "Database Access" → "Add New Database User"
-   - Username: `wallet_user`, Password: `[generate strong password]`
-   - Database User Privileges: "Read and write to any database"
-
-4. **Network Access**:
-   - Click "Network Access" → "Add IP Address"
-   - Click "Allow Access from Anywhere" (for development)
-   - Or add your specific IP
-
-5. **Get Connection String**:
-   - Click "Clusters" → "Connect" → "Connect your application"
-   - Copy connection string:
-   ```
-   mongodb+srv://wallet_user:<password>@cluster0.xxxxx.mongodb.net/wallet_db?retryWrites=true&w=majority
-   ```
-   - Replace `<password>` with your actual password
-   - Update `.env` file with this URI
-
-
-
-## 🎯 Meeting Requirements with MongoDB
+## 🎯 Meeting Requirements
 
 | Requirement | Status | Implementation |
 |------------|--------|----------------|
@@ -601,10 +525,10 @@ sudo apt-get install mongodb
 | CI/CD | ✅ | GitHub Actions |
 
 
-## 🎓 Next Steps
+## 🎓 Setup Steps
 
 1. **Install dependencies**: `npm install`
-2. **Setup MongoDB**: Local or Atlas (see guide above)
+2. **Setup MongoDB**: Local or Atlas
 3. **Configure environment**: Copy and edit `.env`
 4. **Run tests**: `npm test`
 5. **Start server**: `npm run dev`
