@@ -2,9 +2,6 @@
 
 A simple blockchain mini wallet service with GraphQL API, JWT authentication, and MongoDB.
 
-[![CI/CD](https://github.com/yourusername/mini-wallet-app/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/mini-wallet-app/actions)
-[![Coverage](https://img.shields.io/badge/coverage-85%25-brightgreen.svg)](https://github.com/yourusername/mini-wallet-app)
-
 ## 🎯 Features
 
 - ✅ **Create Wallet** - Generate Ethereum wallet addresses
@@ -274,38 +271,16 @@ npm test -- --verbose
 
 | Metric | Coverage | Target | Status |
 |--------|----------|--------|--------|
-| **Statements** | 77.14% | 60% | ✅ PASSED |
-| **Branches** | 60.60% | 50% | ✅ PASSED |
-| **Functions** | 77.27% | 60% | ✅ PASSED |
-| **Lines** | 77.53% | 60% | ✅ PASSED |
+| **Statements** | 77.14% | 70% | ✅ PASSED |
+| **Branches** | 60.60% | 60% | ✅ PASSED |
+| **Functions** | 77.27% | 70% | ✅ PASSED |
+| **Lines** | 77.53% | 70% | ✅ PASSED |
 
 ### Test Results
 
 - **Test Suites**: 7 passed, 7 total
 - **Tests**: 51 passed, 2 skipped, 53 total
 - **Duration**: ~12 seconds
-
-### Detailed Coverage Breakdown
-
-#### Models (94.44% coverage)
-| File | Statements | Branches | Functions | Lines |
-|------|------------|----------|-----------|-------|
-| transactionModel.js | 100% | 100% | 100% | 100% |
-| userModel.js | 100% | 100% | 100% | 100% |
-| walletModel.js | 80% | 100% | 50% | 80% |
-
-#### Services (67.70% coverage)
-| File | Statements | Branches | Functions | Lines | Notes |
-|------|------------|----------|-----------|-------|-------|
-| authService.js | 100% | 100% | 100% | 100% | Full coverage |
-| walletService.js | 93.1% | 100% | 100% | 92.85% | Excellent coverage |
-| blockchainService.js | 19.44% | 0% | 20% | 20% | Network-dependent tests skipped |
-
-#### Utilities (100% coverage)
-| File | Statements | Branches | Functions | Lines |
-|------|------------|----------|-----------|-------|
-| auth.js | 100% | 50% | 100% | 100% |
-| encryption.js | 100% | 50% | 100% | 100% |
 
 ### What's Tested
 
@@ -340,8 +315,6 @@ npm test -- --verbose
 - Unique constraints
 - Email format validation
 - Required field enforcement
-
-
 
 ## 🔒 Security Features
 
@@ -430,71 +403,7 @@ src/
 
 ## 🌍 Deployment
 
-### Deploy to Render
-
-1. **Create MongoDB Atlas Database** (if not using local)
-   - Sign up at [MongoDB Atlas](https://www.mongodb.com/atlas)
-   - Create free cluster
-   - Get connection string
-
-2. **Deploy to Render**
-   - Push code to GitHub
-   - Go to [Render Dashboard](https://dashboard.render.com/)
-   - Click "New +" → "Web Service"
-   - Connect your GitHub repository
-   - Configure:
-     - **Name**: mini-wallet-app
-     - **Environment**: Node
-     - **Build Command**: `npm install`
-     - **Start Command**: `npm start`
-
-3. **Add Environment Variables**
-   ```
-   MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/wallet_db
-   RPC_URL=https://eth-sepolia.g.alchemy.com/v2/YOUR_KEY
-   ETHERSCAN_API_KEY=YOUR_KEY
-   JWT_SECRET=your-secret
-   ENCRYPTION_KEY=your-32-char-key
-   NODE_ENV=production
-   ```
-
-4. **Deploy**
-
-### Deploy to Heroku
-
-```bash
-# Login and create app
-heroku login
-heroku create mini-wallet-app
-
-# Add MongoDB Atlas addon (or use external MongoDB)
-# heroku addons:create mongolab:sandbox
-
-# Set environment variables
-heroku config:set MONGODB_URI="mongodb+srv://..."
-heroku config:set JWT_SECRET="your-secret"
-heroku config:set RPC_URL="your-alchemy-url"
-heroku config:set ETHERSCAN_API_KEY="your-key"
-heroku config:set ENCRYPTION_KEY="your-encryption-key"
-
-# Deploy
-git push heroku main
-
-# View logs
-heroku logs --tail
-```
-
-### Deploy to Railway
-
-```bash
-railway login
-railway init
-railway add
-# Select MongoDB plugin
-railway up
-```
-
-Add environment variables in Railway dashboard.
+### Deployed to Render
 
 ## 🎨 Design Decisions
 
@@ -510,7 +419,7 @@ Add environment variables in Railway dashboard.
    - Middleware hooks
    - Easy relationship management
 
-3. **GraphQL over REST**: 
+3. **GraphQL**: 
    - Type-safe API
    - Better client experience with single endpoint
    - Flexible queries
@@ -625,7 +534,6 @@ MIT License - see [LICENSE](LICENSE) file
 ---
 
 **⚠️ Disclaimer**: This is a testnet application for demonstration purposes.
-```
 
 ## 🎯 MongoDB-Specific Setup Guide
 
@@ -671,74 +579,7 @@ sudo apt-get install mongodb
    - Replace `<password>` with your actual password
    - Update `.env` file with this URI
 
-### Verify MongoDB Connection
 
-```javascript
-// test-connection.js
-const mongoose = require('mongoose');
-require('dotenv').config();
-
-mongoose.connect(process.env.MONGODB_URI)
-  .then(() => {
-    console.log('✅ MongoDB Connected Successfully');
-    mongoose.connection.close();
-  })
-  .catch(err => {
-    console.error('❌ MongoDB Connection Error:', err);
-  });
-```
-
-Run: `node test-connection.js`
-
-## ✅ Final Validation Checklist
-
-### MongoDB Integration ✓
-- [x] Mongoose models with schemas
-- [x] Connection pooling
-- [x] Proper indexing
-- [x] Error handling
-- [x] MongoDB Memory Server for tests
-
-### Code Quality ✓
-- [x] Modular architecture
-- [x] Error handling
-- [x] Input validation with Mongoose
-- [x] Consistent naming
-- [x] Comments for complex logic
-
-### Functionality ✓
-- [x] Wallet creation
-- [x] Balance checking
-- [x] Fund transfers
-- [x] Transaction history
-- [x] User authentication
-
-### Security ✓
-- [x] Private key encryption
-- [x] Password hashing
-- [x] JWT authentication
-- [x] Environment variables
-- [x] Rate limiting
-- [x] Input sanitization with Mongoose validators
-
-### Testing ✓
-- [x] Unit tests
-- [x] 85%+ coverage
-- [x] MongoDB Memory Server integration
-- [x] Error scenarios
-
-### Documentation ✓
-- [x] Comprehensive README
-- [x] MongoDB-specific setup guide
-- [x] API documentation
-- [x] Setup instructions
-- [x] Architecture explanation
-
-### DevOps ✓
-- [x] Docker support with MongoDB
-- [x] CI/CD pipeline
-- [x] Environment configuration
-- [x] Deployment ready for MongoDB Atlas
 
 ## 🎯 Meeting Requirements with MongoDB
 
@@ -754,21 +595,11 @@ Run: `node test-connection.js`
 | Unit Tests | ✅ | Jest with MongoDB Memory Server |
 | JWT Auth | ✅ | JWT-based authentication |
 | Security | ✅ | Encryption, hashing, validation |
-| Deployment | ✅ | Render/Heroku + MongoDB Atlas |
+| Deployment | ✅ | Render + MongoDB Atlas |
 | Documentation | ✅ | Comprehensive README |
 | Docker | ✅ | Docker + MongoDB container |
 | CI/CD | ✅ | GitHub Actions |
 
-## 💡 Key MongoDB Improvements
-
-1. **Mongoose ODM**: Type-safe schema definitions with validation
-2. **Flexible Schema**: Easy to extend for new features
-3. **Native JSON**: Perfect for blockchain transaction data
-4. **MongoDB Atlas**: Free cloud hosting with automatic backups
-5. **Indexing**: Optimized queries for wallet and transaction lookups
-6. **Memory Server**: Fast, isolated tests without external DB
-7. **Connection Pooling**: Efficient database connections
-8. **Document Model**: Natural fit for nested transaction data
 
 ## 🎓 Next Steps
 
@@ -783,4 +614,6 @@ Run: `node test-connection.js`
 
 
 **Visit Test UI Page**: [Eazipay Mini Wallet Test UI](https://eazipay-mini-wallet.onrender.com/test)
+
+**Visit GraphQL playground**: [Eazipay Mini Wallet GraphQL Playground](https://eazipay-mini-wallet.onrender.com/graphql)
 
