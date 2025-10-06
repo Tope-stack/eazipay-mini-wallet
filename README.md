@@ -557,3 +557,6 @@ MIT License - see [LICENSE](LICENSE) file
    - walletdId: 68e2309debfcfa2722dde4a4
    - walletaddress: 0x40Ef24dA8eC57223ba7261F60d58c834949A98Ae
    - userId: 68e22b5e176a466f0fb18178
+
+
+**Final Note**: A free instance was used for deployment and will spin down with inactivity, which can delay requests by 50 seconds or more.
